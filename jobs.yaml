@@ -1,0 +1,20 @@
+- id: df3dde76-e743-43d7-818c-b15e98d63049
+  project: examples
+  loglevel: INFO
+  sequence:
+    keepgoing: false
+    strategy: node-first
+    commands:
+    - exec: bin/status.sh
+  description: Get the status
+  name: Status
+  uuid: df3dde76-e743-43d7-818c-b15e98d63049
+  nodefilters:
+    dispatch:
+      threadcount: 1
+      keepgoing: false
+      excludePrecedence: true
+      rankOrder: ascending
+    include:
+      tags: tomcat
+  group: tomcat
