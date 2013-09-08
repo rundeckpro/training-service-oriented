@@ -54,7 +54,7 @@ service iptables stop
 # Configure the mysql connection and log file storage plugin.
 cd /etc/rundeck
 
-cp /vagrant/id_rsa* /var/lib/rundeck/.ssh/
+cp /vagrant/provisioning/id_rsa* /var/lib/rundeck/.ssh/
 chown rundeck:rundeck /var/lib/rundeck/.ssh/
 
 # Update the framework.properties with name
@@ -76,28 +76,8 @@ chown rundeck:rundeck framework.properties
 
 set +e; # shouldn't have to turn off errexit.
 
-function wait_for_success_msg {
-    success_msg=$1
-    let count=0 max=18
-
-    while [ $count -le $max ]
-    do
-        if ! grep "${success_msg}" /var/log/rundeck/service.log
-        then  printf >&2 ".";#  output message.
-        else  break; # successful message.
-        fi
-        let count=$count+1;# increment attempts count.
-        [ $count -eq $max ] && {
-            echo >&2 "FAIL: Execeeded max attemps "
-            exit 1
-        }
-        sleep 10; # wait 10s before trying again.
-    done
-}
-
-mkdir -p /var/log/vagrant
+source /vagrant/provisioning/functions.sh
 success_msg="Started SocketConnector@"
-
 if ! service rundeckd status
 then
     echo "Starting rundeck..."
@@ -106,7 +86,7 @@ then
         service rundeckd start 
     ) &> /var/log/rundeck/service.log # redirect stdout/err to a log.
 
-    wait_for_success_msg "$success_msg"
+    wait_for_success_msg "$success_msg" /var/log/rundeck/service.log 
 
 fi
 

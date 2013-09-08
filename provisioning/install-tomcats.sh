@@ -107,7 +107,7 @@ do
 
 	# Copy the rundeck server ssh key to this account.
 	mkdir -p $CATALINA_BASE/.ssh
-	cp /vagrant/id_rsa.pub $CATALINA_BASE/.ssh/authorized_keys2
+	cp /vagrant/provisioning/id_rsa.pub $CATALINA_BASE/.ssh/authorized_keys2
 	chmod 600 $CATALINA_BASE/.ssh/authorized_keys2
 	chown -R tomcat${instance} $CATALINA_BASE/.ssh
 
@@ -155,7 +155,7 @@ do
 	chmod 755 $CATALINA_BASE/bin/*.sh
 
 	# Deploy the simpleapp war file to the webapps directory.
-	cp /vagrant/simple-1.0.0.war $CATALINA_BASE/webapps
+	cp /vagrant/provisioning/simple-1.0.0.war $CATALINA_BASE/webapps
 
 	chown -R tomcat${instance}:tomcat $CATALINA_BASE
 
@@ -184,7 +184,7 @@ then
 fi
 
 mkdir -p /home/rundeck/.ssh
-cp /vagrant/id_rsa.pub /home/rundeck/.ssh/authorized_keys2
+cp /vagrant/provisioning/id_rsa.pub /home/rundeck/.ssh/authorized_keys2
 chmod 600 /home/rundeck/.ssh/authorized_keys2
 chown -R rundeck /home/rundeck/.ssh
 

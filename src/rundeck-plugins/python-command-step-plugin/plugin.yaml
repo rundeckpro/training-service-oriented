@@ -1,0 +1,19 @@
+name: python node step
+version: 1.0
+rundeckPluginVersion: 1.0
+author: Alex Honor
+date: 2013-09-05
+providers:
+  - name: python-node-step
+    service: RemoteScriptNodeStep
+    title: Python node step
+    description: Execute the python statements on the remote node.
+    plugin-type: script
+    script-interpreter: /bin/bash
+    script-file: nodestep.sh
+    script-args: '${node.name} ${config.script}'
+    config:
+      - type: String
+        name: script
+        title: Script
+        description: python statements to execute.

@@ -23,7 +23,7 @@
       <allowEmptyArchive>false</allowEmptyArchive>
     </hudson.tasks.ArtifactArchiver>
     <org.jenkinsci.plugins.rundeck.RundeckNotifier plugin="rundeck@2.11">
-      <jobId>a00e44a8-0c91-44a3-8c70-334640db675e</jobId>
+      <jobId>simpleapp:deploy</jobId>
       <options>build_number=$BUILD_NUMBER
 war_url=$BUILD_URL/artifact/simple-1.0.$BUILD_NUMBER.war</options>
       <nodeFilters>tomcat</nodeFilters>
