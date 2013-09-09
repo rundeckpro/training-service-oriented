@@ -24,7 +24,9 @@ curl -# --fail -L -o /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/red
 }
 rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
 
-yum -y install jenkins
+#yum -y install jenkins
+
+rpm -i http://pkg.jenkins-ci.org/redhat/jenkins-1.529-1.1.noarch.rpm
 
 mkdir -p /var/lib/jenkins/examples
 cp /vagrant/provisioning/simple-1.0.0.war /var/lib/jenkins/examples
