@@ -19,7 +19,7 @@ yum -y install java-1.6.0
 #
 
 curl -# --fail -L -o /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo || {
-    echo "failed downloading rundeck.repo config"
+    echo "failed downloading jenkins.repo config"
     exit 3
 }
 rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
