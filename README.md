@@ -32,9 +32,9 @@ After the b2d VM is running, you can login to Jenkins and Rundeck:
 You can also access the simpleapp pages:
 
 * app1-tomcat1: http://192.168.50.11:18080/simpleapp-1.0.0/
-* app1-tomcat2: http://192.168.50.11:18080/simpleapp-1.0.0/
+* app1-tomcat2: http://192.168.50.11:28080/simpleapp-1.0.0/
 * app2-tomcat1: http://192.168.50.12:18080/simpleapp-1.0.0/
-* app2-tomcat2: http://192.168.50.12:18080/simpleapp-1.0.0/
+* app2-tomcat2: http://192.168.50.12:28080/simpleapp-1.0.0/
 
 ## Service oriented resource model
 
