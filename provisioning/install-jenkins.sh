@@ -56,7 +56,8 @@ java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin \
 	http://updates.jenkins-ci.org/download/plugins/rundeck/2.11/rundeck.hpi
 
 # Configure the plugin.
-su - jenkins -c "cp /vagrant/provisioning/org.jenkinsci.plugins.rundeck.RundeckNotifier.xml /var/lib/jenkins/"
+cp /vagrant/provisioning/jenkins/org.jenkinsci.plugins.rundeck.RundeckNotifier.xml /var/lib/jenkins/
+chown jenkins:jenkins /var/lib/jenkins/org.jenkinsci.plugins.rundeck.RundeckNotifier.xml
 
 # Load job definiton.
 java -jar jenkins-cli.jar -s http://localhost:8080 create-job simpleapp \
