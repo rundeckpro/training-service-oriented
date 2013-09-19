@@ -31,10 +31,10 @@ After the b2d VM is running, you can login to Jenkins and Rundeck:
 
 You can also access the simple pages:
 
-* app1-tomcat1: http://192.168.50.11:18080/simple-1.0.0/
-* app1-tomcat2: http://192.168.50.11:28080/simple-1.0.0/
-* app2-tomcat1: http://192.168.50.12:18080/simple-1.0.0/
-* app2-tomcat2: http://192.168.50.12:28080/simple-1.0.0/
+* app1-tomcat1: http://192.168.50.11:18080/simple/
+* app1-tomcat2: http://192.168.50.11:28080/simple/
+* app2-tomcat1: http://192.168.50.12:18080/simple/
+* app2-tomcat2: http://192.168.50.12:28080/simple/
 
 ## Service oriented resource model
 
@@ -60,9 +60,3 @@ While on the app1 and app2 nodes, the following is used:
 
 * install-tomcats.sh: Installs two tomcat instances on each host.
 Also installs the rundeck-admin module to create the resource model nodes.
-
-
-
-
-
-
