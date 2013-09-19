@@ -5,6 +5,10 @@ if one prefers to manage services as if they were
 deployed to their own nodes, though physically they
 share a common host.
 
+The example also includes a simple example 
+"Remote Script Node Step" plugin. The plugin executes
+python script on remote nodes.
+
 ## Requirements
 
 * Vagrant installed to run the VMs
