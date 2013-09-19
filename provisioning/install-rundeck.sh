@@ -39,7 +39,26 @@ else
 fi
 yum -y install rundeck
 
+# 2.0 uses newer jetty. This should eventually be fixed in the rpm.
+sed -i "s/org.mortbay/org.eclipse/g" /etc/rundeck/jaas-loginmodule.conf
 
+# Add the HipChat plugin
+if [[ ! -f  /var/lib/rundeck/libext/rundeck-hipchat-plugin-1.0.0.jar ]]
+then
+cp /vagrant/rundeck-hipchat-plugin-1.0.0.jar /var/lib/rundeck/libext/
+chown rundeck:rundeck /var/lib/rundeck/libext/rundeck-hipchat-plugin-1.0.0.jar
+echo "HipChat plugin installed."
+fi
+
+if [[ ! -f  /var/lib/rundeck/libext/PagerDutyNotification.groovy ]]
+then
+curl -s --fail -L https://raw.github.com/rundeck-plugins/pagerduty-notification/master/src/PagerDutyNotification.groovy -o /var/lib/rundeck/libext/PagerDutyNotification.groovy
+cat >>/etc/rundeck/framework.properties <<EOF
+framework.plugin.Notification.PagerDutyNotification.service_key=value
+EOF
+echo "PagerDuty plugin installed."
+fi
+chown -R rundeck:rundeck /var/lib/rundeck/libext
 
 #
 # Disable the firewall so we can easily access it from any host.
@@ -64,6 +83,10 @@ sed -i \
     -e "s,framework.rundeck.url = .*,framework.rundeck.url = http://$IP:4440,g" \
     framework.properties
 
+sed -i \
+    -e "s,grails.serverURL=.*,grails.serverURL=http://$IP:4440,g" \
+    rundeck-config.properties
+
 chown rundeck:rundeck framework.properties
 
 
@@ -77,7 +100,7 @@ chown rundeck:rundeck framework.properties
 set +e; # shouldn't have to turn off errexit.
 
 source /vagrant/provisioning/functions.sh
-success_msg="Started SocketConnector@"
+success_msg="Connector@"
 if ! service rundeckd status
 then
     echo "Starting rundeck..."

@@ -1,14 +1,194 @@
-- id: df3dde76-e743-43d7-818c-b15e98d63049
-  project: examples
+- id: b5d8bd40-7da6-4358-acda-9deee5d32b9d
+  project: simple
+  loglevel: INFO
+  sequence:
+    keepgoing: false
+    strategy: step-first
+    commands:
+    - script: |-
+        #!/usr/bin/env bash
+
+        set -eu
+
+        [[ $# == 2 ]] || {
+            echo >&2 'usage: build_number catalina_base'
+            exit 2
+        }
+
+        build_number=$1
+        catalina_base=$2
+
+        [[ ! -d "$catalina_base" ]] && {
+            echo >&2 "catalina_base directory not found: $catalina_base"
+            exit 1
+        }
+
+        cd "$catalina_base"
+
+        [[ ! -d webapps-$build_number ]] && {
+            echo >&2 "no webapps version found for $build_number"
+            exit 1
+        }
+
+        if ! current_version=$(readlink webapps)
+        then 
+            echo >&2 "couldn't read symlink for webapps. bailing."
+            exit 1
+        else 
+            printf "current version: %s\n" "${current_version}"
+        fi
+
+        rm webapps
+        ln -s webapps-$build_number webapps
+
+        echo "updated link to $catalina_base/$(readlink webapps)"
+      args: ${option.build_number} ${node.catalina_base}
+  description: activate the app version
+  name: activate_version
+  uuid: b5d8bd40-7da6-4358-acda-9deee5d32b9d
+  nodefilters:
+    dispatch:
+      threadcount: 1
+      keepgoing: false
+      excludePrecedence: true
+      rankAttribute: rank
+      rankOrder: ascending
+    include:
+      tags: tomcat
+  options:
+    build_number:
+      required: true
+      description: the build number
+- id: c1fdd8ce-b39e-4e6a-9d36-4c7dd68ad6e2
+  project: simple
   loglevel: INFO
   sequence:
     keepgoing: false
     strategy: node-first
     commands:
-    - exec: bin/status.sh
-  description: Get the status
-  name: Status
-  uuid: df3dde76-e743-43d7-818c-b15e98d63049
+    - jobref:
+        group: ''
+        name: url_exists
+        args: -url ${option.war_url}
+    - jobref:
+        group: ''
+        name: stage_webapp
+        args: -war_url ${option.war_url} -build_number ${option.build_number}
+    - jobref:
+        group: ''
+        name: stop
+    - jobref:
+        group: ''
+        name: activate_version
+        args: -build_number ${option.build_number}
+    - jobref:
+        group: ''
+        name: start
+    - jobref:
+        group: ''
+        name: status
+  description: deploy the app
+  name: deploy
+  notification:
+    onsuccess:
+      plugin:
+        type: HipChatNotification
+        configuration:
+          room: rundeck
+          apiAuthToken: deecdd90b9f67cfea29588e09e0960
+    onfailure:
+      plugin:
+        type: HipChatNotification
+        configuration:
+          apiAuthToken: deecdd90b9f67cfea29588e09e0960
+          room: rundeck
+  uuid: c1fdd8ce-b39e-4e6a-9d36-4c7dd68ad6e2
+  options:
+    build_number:
+      required: true
+      description: the build number
+      valuesUrl: http://192.168.50.4/cgi-bin/jenkins-builds.cgi?appname=simple
+    war_url:
+      required: true
+      description: url to the war
+      valuesUrl: http://192.168.50.4/cgi-bin/jenkins-artifacts.cgi?appname=simple&build=${option.build_number.value}
+- id: 1e3eb770-b272-4055-94ea-11ad2f935846
+  project: simple
+  loglevel: INFO
+  sequence:
+    keepgoing: false
+    strategy: step-first
+    commands:
+    - script: |-
+        #!/usr/bin/env bash
+
+        set -eu
+
+        [[ $# == 3 ]] || {
+            echo >&2 'usage: war_url build_number catalina_base'
+            exit 2
+        }
+
+        war_url=$1
+        build_number=$2
+        catalina_base=$3
+
+        cd $catalina_base
+        mkdir -p webapps-$build_number
+
+        curl -s -L -f "$war_url" -o webapps-$build_number/simple.war
+
+        echo "installed war: $catalina_base/webapps-$build_number/simple.war"
+      args: ${option.war_url} ${option.build_number} ${node.catalina_base}
+  description: stage the app
+  name: stage_webapp
+  uuid: 1e3eb770-b272-4055-94ea-11ad2f935846
+  nodefilters:
+    dispatch:
+      threadcount: 1
+      keepgoing: false
+      excludePrecedence: true
+      rankAttribute: rank
+      rankOrder: ascending
+    include:
+      tags: tomcat
+  options:
+    build_number:
+      required: true
+      description: the build number
+    war_url:
+      required: true
+      description: the URL to the WAR file
+- id: d777fef4-d1ad-4716-8a49-8435afb6b53a
+  project: simple
+  loglevel: INFO
+  sequence:
+    keepgoing: false
+    strategy: node-first
+    commands:
+    - script: |-
+        #!/usr/bin/env bash
+
+        set -eu
+
+        [[ $# = 1 ]] || {
+            echo >&2 'usage: catalina_base'
+            exit 2
+        }
+
+        catalina_base=$1
+
+        if ! status=$("$catalina_base/bin/status.sh")
+        then
+            "$catalina_base/bin/startup.sh"
+            echo "Started (was $status)"
+        fi
+
+        exit $?
+      args: ${node.catalina_base}
+  description: start the app
+  name: start
+  uuid: d777fef4-d1ad-4716-8a49-8435afb6b53a
   nodefilters:
     dispatch:
       threadcount: 1
@@ -17,4 +197,76 @@
       rankOrder: ascending
     include:
       tags: tomcat
-  group: tomcat
+- id: 71fb2cd4-2935-4f4a-9650-ec6b06e380cb
+  project: simple
+  loglevel: INFO
+  sequence:
+    keepgoing: false
+    strategy: node-first
+    commands:
+    - exec: bin/status.sh
+  description: get the app status
+  name: status
+  uuid: 71fb2cd4-2935-4f4a-9650-ec6b06e380cb
+  nodefilters:
+    dispatch:
+      threadcount: 1
+      keepgoing: true
+      excludePrecedence: true
+      rankOrder: ascending
+    include:
+      tags: tomcat
+- id: fb53355f-fd93-4def-8ea1-e172414d5010
+  project: simple
+  loglevel: INFO
+  sequence:
+    keepgoing: false
+    strategy: node-first
+    commands:
+    - script: |-
+        #!/usr/bin/env bash
+
+        set -eu
+        [[ $# = 1 ]] || {
+            echo >&2 'usage: catalina_base'
+            exit 2
+        }
+        catalina_base=$1
+
+        if ! status=$("$catalina_base/bin/status.sh")
+        then
+            echo "simple not running"
+        else
+            "$catalina_base/bin/shutdown.sh"
+        fi
+        echo "Stopped (was $status)"
+      args: ${node.catalina_base}
+  description: stop the app
+  name: stop
+  uuid: fb53355f-fd93-4def-8ea1-e172414d5010
+  nodefilters:
+    dispatch:
+      threadcount: 1
+      keepgoing: false
+      excludePrecedence: true
+      rankAttribute: rank
+      rankOrder: ascending
+    include:
+      tags: tomcat
+- id: 2c585c24-3e0f-48d7-9f3d-f1f1b7e11a81
+  project: simple
+  loglevel: INFO
+  sequence:
+    keepgoing: false
+    strategy: node-first
+    commands:
+    - exec: 'curl --output /dev/null -s --head -f "${option.url}" && { echo
+        "URL exists: ''${option.url}''" ; } || { echo  "URL does not exist: ''${option.url}''"
+        ; exit 1 ; }'
+  description: check if the url exists
+  name: url_exists
+  uuid: 2c585c24-3e0f-48d7-9f3d-f1f1b7e11a81
+  options:
+    url:
+      required: true
+      description: the url to check

@@ -16,5 +16,10 @@ su - rundeck -c "dispatch -p $PROJECT" > /dev/null
 # Fire off a command.
 su - rundeck -c "dispatch -p $PROJECT -f -- whoami"
 
+cp /vagrant/provisioning/jobs.yaml /tmp
+chown rundeck:rundeck /tmp/jobs.yaml
+
+su - rundeck -c "rd-jobs load -p $PROJECT -F yaml -f /tmp/jobs.yaml"
+
 
 echo "Project $PROJECT created."

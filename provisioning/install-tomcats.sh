@@ -50,12 +50,12 @@ yum -y install rerun rerun-rundeck-admin
 #
 
 TOMCAT_BASENAME="apache-tomcat-7.0.42"
-TOMCAT_ZIP_URL="http://www.linuxtourist.com/apache/tomcat/tomcat-7/v7.0.42/bin/${TOMCAT_BASENAME}.zip"
-
-curl -# --fail -L -z $TOMCAT_BASENAME.zip -o $TOMCAT_BASENAME.zip "$TOMCAT_ZIP_URL" || {
-    echo "failed downloading tomcat binary."
+TOMCAT_ZIP_URL="http://jcenter.bintray.com/org/apache/tomcat/tomcat/7.0.42/tomcat-7.0.42.zip"
+curl -s --fail -L -z $TOMCAT_BASENAME.zip -o $TOMCAT_BASENAME.zip "$TOMCAT_ZIP_URL" || {
+    echo >&2 "failed downloading tomcat binary."
     exit 3
 }
+
 
 unzip -o $TOMCAT_BASENAME.zip
 
@@ -114,9 +114,9 @@ do
 	# Start defining the model for this node.
 	model=(${os_info[*]} -hostname $IP -username tomcat${instance} -tags tomcat,tomcat${instance},$(hostname))
 	model=(${model[*]} -catalina_base $CATALINA_BASE -catalina_home $CATALINA_HOME)
-	model=(${model[*]} -rank ${instance} -simpleapp_url http://$IP:${instance}8080/simple)
+	model=(${model[*]} -rank ${instance} -simple_url http://$IP:${instance}8080/simple)
 
-	mkdir -p $CATALINA_BASE/{logs,temp,webapps,work,bin}
+	mkdir -p $CATALINA_BASE/{logs,temp,work,bin}
 
 	if [[ ! -d $CATALINA_BASE/conf ]]
 	then cp -r $CATALINA_HOME/conf $CATALINA_BASE/conf
@@ -154,9 +154,11 @@ do
 
 	chmod 755 $CATALINA_BASE/bin/*.sh
 
-	# Deploy the simpleapp war file to the webapps directory.
-	cp /vagrant/provisioning/simple-1.0.0.war $CATALINA_BASE/webapps
-
+	# Deploy the simple war file to the webapps directory.
+	[[ ! -d $CATALINA_BASE/webapps ]] || rm -r $CATALINA_BASE/webapps
+	mkdir $CATALINA_BASE/webapps-1.0.0
+	cp /vagrant/provisioning/simple-1.0.0.war $CATALINA_BASE/webapps-1.0.0/simple.war
+	(cd $CATALINA_BASE; ln -s webapps-1.0.0 webapps)
 	chown -R tomcat${instance}:tomcat $CATALINA_BASE
 
 
@@ -170,7 +172,7 @@ do
 	echo "Starting the instance..."
 	su - tomcat${instance} -c "$CATALINA_BASE/bin/startup.sh"
 
-	echo "Access the webapp via http://$IP:${instance}8080/simple-1.0.0/"
+	echo "Access the webapp via http://$IP:${instance}8080/simple/"
 done
 
 #

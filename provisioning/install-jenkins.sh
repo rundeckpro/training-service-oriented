@@ -4,6 +4,8 @@
 set -e 
 set -u
 
+RUNDECK_IP=$1
+
 # Process command line arguments.
 # ----------------
 
@@ -56,12 +58,12 @@ java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin \
 	http://updates.jenkins-ci.org/download/plugins/rundeck/2.11/rundeck.hpi
 
 # Configure the plugin.
-cp /vagrant/provisioning/jenkins/org.jenkinsci.plugins.rundeck.RundeckNotifier.xml /var/lib/jenkins/
+sed "s/localhost/$RUNDECK_IP/g" /vagrant/provisioning/jenkins/org.jenkinsci.plugins.rundeck.RundeckNotifier.xml > /var/lib/jenkins/org.jenkinsci.plugins.rundeck.RundeckNotifier.xml
 chown jenkins:jenkins /var/lib/jenkins/org.jenkinsci.plugins.rundeck.RundeckNotifier.xml
 
 # Load job definiton.
-java -jar jenkins-cli.jar -s http://localhost:8080 create-job simpleapp \
-	< /vagrant/provisioning/jenkins/simpleapp.xml
+java -jar jenkins-cli.jar -s http://localhost:8080 create-job simple \
+	< /vagrant/provisioning/jenkins/simple.xml
 
 # Restart it to finilize the install.
 java -jar jenkins-cli.jar -s http://localhost:8080 safe-restart

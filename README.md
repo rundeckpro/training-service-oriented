@@ -29,12 +29,12 @@ After the b2d VM is running, you can login to Jenkins and Rundeck:
 * [jenkins](http://192.168.50.4:8080)
 * [rundeck](http://192.168.50.4:4440)
 
-You can also access the simpleapp pages:
+You can also access the simple pages:
 
-* app1-tomcat1: http://192.168.50.11:18080/simpleapp-1.0.0/
-* app1-tomcat2: http://192.168.50.11:28080/simpleapp-1.0.0/
-* app2-tomcat1: http://192.168.50.12:18080/simpleapp-1.0.0/
-* app2-tomcat2: http://192.168.50.12:28080/simpleapp-1.0.0/
+* app1-tomcat1: http://192.168.50.11:18080/simple-1.0.0/
+* app1-tomcat2: http://192.168.50.11:28080/simple-1.0.0/
+* app2-tomcat1: http://192.168.50.12:18080/simple-1.0.0/
+* app2-tomcat2: http://192.168.50.12:28080/simple-1.0.0/
 
 ## Service oriented resource model
 
@@ -52,7 +52,7 @@ The provisioning process breaks down into setting up the three
 VMs. The first one, b2d, uses three scripts:
 
 * install-jenkins.sh: Installs the jenkins RPM and starts the service. 
-TODO: should install the Rundeck plugin and load the simpleapp build job.
+TODO: should install the Rundeck plugin and load the simple build job.
 * install-rundeck.sh: Installs the rundeck RPMs and starts the service.
 * add-project.sh: Creates a working project.
 
