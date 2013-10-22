@@ -72,14 +72,14 @@ You might be interested in how this working example was constructed.
 Each of the VMs uses a set of provinsiong scripts.
 The first server, "b2d", uses three scripts:
 
-* install-jenkins.sh: Installs the jenkins RPM and starts the service. 
-* install-rundeck.sh: Installs the rundeck RPMs and starts the service.
-* add-project.sh: Creates a working project.
+* install-jenkins.sh: Installs jenkins via yum and starts the service. 
+* install-rundeck.sh: Installs rundeck via yum and starts the service.
+* add-project.sh: Creates the working project called "simple" with a set of jobs and nodes.
 
 While on the app1 and app2 VMs, the following script is used:
 
 * install-tomcats.sh: Installs two tomcat instances on each host.
-Also installs the rundeck-admin module to create the resource model nodes.
+Uses the rundeck-admin module to create nodes for the resource model in the "simple" project.
 
 ## TODO
 
