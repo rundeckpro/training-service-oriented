@@ -39,8 +39,8 @@ Bring up the 3 VMs:
 
 After the b2d VM is running, you can login to Jenkins and Rundeck:
 
-* [jenkins](http://192.168.50.4:8080)
-* [rundeck](http://192.168.50.4:4440)
+* [jenkins](http://192.168.50.4:8080) (login: anonymous)
+* [rundeck](http://192.168.50.4:4440) (login: admin/admin)
 
 You can also access the simple pages:
 
@@ -48,6 +48,12 @@ You can also access the simple pages:
 * app1-tomcat2: http://192.168.50.11:28080/simple/
 * app2-tomcat1: http://192.168.50.12:18080/simple/
 * app2-tomcat2: http://192.168.50.12:28080/simple/
+
+## Running the example
+
+1. Login to Rundeck and run the "status" job
+2. In Jenkins, run a couple of builds for the "simple" project
+3. Login to Rundeck and run the "deploy" job using one of the builds
 
 ## Service oriented resource model
 
