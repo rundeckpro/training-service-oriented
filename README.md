@@ -1,14 +1,18 @@
-This example shows how Rundeck can manage multiple
+This example shows Rundeck supporting a continuous delivery process.
+Rundeck is shown with a set of Jobs that deploy WAR files to a
+"simple" app environment.
+The example also shows how the Rundeck can manage multiple
 tomcat instances on single nodes. This can be useful
 if one prefers to manage services as if they were
 deployed to their own nodes, though physically they
 share a common host.
 
-The example also includes a simple example 
-"Remote Script Node Step" plugin. The plugin executes
-python script on remote nodes.
+Also in the example, is a 
+"Remote Script Node Step" plugin. This plugin executes
+user supplied python script on remote nodes.
 
 ## Requirements
+To run the examples ensure you have:
 
 * Vagrant installed to run the VMs
 * Internet access to download needed software (automated).
