@@ -70,11 +70,12 @@ This _service oriented_ resource model uses the Rundeck Node concept and extends
 
 Each tomcat instance is modeled as a Rundeck node. This
 makes it possible to execute job steps within just the 
-scope of each tomcat instance.
+node context for each tomcat instance.
 
-To better isolate each tomcat instance from each other
-co-located on the same host, a separate system login is
-provided for each instance.
+The node for each tomcat instance also specifies a different
+system login to use to execute the commands. This helps
+isolate each tomcat instance from each other
+since they are co-located on the same host.
 
 ## Under the covers
 
