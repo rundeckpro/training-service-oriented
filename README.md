@@ -64,3 +64,10 @@ While on the app1 and app2 nodes, the following is used:
 
 * install-tomcats.sh: Installs two tomcat instances on each host.
 Also installs the rundeck-admin module to create the resource model nodes.
+
+## TODO
+
+Use Jenkins plugin for artifact URL. eg
+
+* http://192.168.50.4:8080/plugin/rundeck/options/artifact?project=simple
+

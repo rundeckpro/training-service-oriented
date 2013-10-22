@@ -21,8 +21,8 @@ RUNDECK_REPO_URL=$3
 #
 # JRE
 #
-yum -y install java-1.6.0
-#
+yum -y install java7
+
 # Rundeck 
 #
 if [ -n "$RUNDECK_REPO_URL" ]

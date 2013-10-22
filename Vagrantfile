@@ -4,8 +4,7 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "https://dl.dropbox.com/u/7225008/Vagrant/CentOS-6.3-x86_64-minimal.box"
 
   PROJECT="simple"
-#  RUNDECK_YUM_REPO="https://bintray.com/rundeck/ci-staging-rpm/rpm"
-  RUNDECK_YUM_REPO="https://bintray.com/ahonor/rundeck-rpm/rpm"
+  RUNDECK_YUM_REPO="https://bintray.com/gschueler/ci-rundeck2-rpm/rpm"
 
   RUNDECK_IP="192.168.50.4"
 
