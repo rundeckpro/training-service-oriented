@@ -1,4 +1,3 @@
-
 This example shows how Rundeck can manage multiple
 tomcat instances on single nodes. This can be useful
 if one prefers to manage services as if they were
@@ -22,9 +21,19 @@ The vagrant config defines three VMs:
 * app1: The first app server running tomcats 1 and 2
 * app2: The second app server running tomcats 1 and 2
 
+## Bootstrap
+
+Check out the source files for these examples:
+
+    git clone https://github.com/simplifyops/training-service-oriented
+
+Then change the working directory:
+
+    cd training-service-oriented
+    
 ## Startup
 
-To bring up the 3 VMs, run:
+Bring up the 3 VMs:
 
     vagrant up 
 
