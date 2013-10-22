@@ -59,7 +59,14 @@ You can also access the simple pages:
 2. In Jenkins, run a couple of builds for the "simple" project
 3. Login to Rundeck and run the "deploy" job using one of the builds
 
-## Service oriented resource model
+## The "simple" project
+
+A Rundeck project called "simple" contains the jobs and nodes to manage the delivery of the "simple" web app.
+
+The project is configured with a set of nodes that represent the VMs managed by vagrant 
+but also nodes that represent each of the tomcat instances.
+
+This _service oriented_ resource model uses the Rundeck Node concept and extends it to represent a software deployment.
 
 Each tomcat instance is modeled as a Rundeck node. This
 makes it possible to execute job steps within just the 
