@@ -65,17 +65,18 @@ To better isolate each tomcat instance from each other
 co-located on the same host, a separate system login is
 provided for each instance.
 
-## Provisioning 
+## Under the covers
 
-The provisioning process breaks down into setting up the three
-VMs. The first one, b2d, uses three scripts:
+You might be interested in how this working example was constructed.
+
+Each of the VMs uses a set of provinsiong scripts.
+The first server, "b2d", uses three scripts:
 
 * install-jenkins.sh: Installs the jenkins RPM and starts the service. 
-TODO: should install the Rundeck plugin and load the simple build job.
 * install-rundeck.sh: Installs the rundeck RPMs and starts the service.
 * add-project.sh: Creates a working project.
 
-While on the app1 and app2 nodes, the following is used:
+While on the app1 and app2 VMs, the following script is used:
 
 * install-tomcats.sh: Installs two tomcat instances on each host.
 Also installs the rundeck-admin module to create the resource model nodes.
