@@ -63,6 +63,20 @@ You can also access the simple pages:
 
 A Rundeck project called "simple" contains the jobs and nodes to manage the delivery of the "simple" web app.
 
+### Jobs
+Seven jobs are loaded into the "simple" project:
+
+* activate_version : activate the app version 	
+* deploy : deploy the app 	
+* stage_webapp : stage the app 	
+* start : start the app 	
+* status : get the app status 	
+* stop : stop the app 	
+* url_exists : check if the url exists
+
+
+### Nodes
+
 The project is configured with a set of nodes that represent the VMs managed by vagrant 
 but also nodes that represent each of the tomcat instances.
 
