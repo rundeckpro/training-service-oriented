@@ -1,8 +1,11 @@
-This example shows Rundeck supporting a continuous delivery process.
-Rundeck is shown with a set of Jobs that deploy WAR files to a
-"simple" app environment.
-The example also shows how the Rundeck can manage multiple
-tomcat instances on single nodes. This can be useful
+This example shows Rundeck supporting a continuous delivery process
+for a webapp called "simple".
+Rundeck is shown with a set of jobs that deploy a webapp to a
+nodes in the "simple" app environment. Deployment can be triggered by
+a Jenkins build or directly by a user.
+
+The example also shows how Rundeck can manage nodes multiple
+with multiple tomcat instances on each. This can be useful
 if one prefers to manage services as if they were
 deployed to their own nodes, though physically they
 share a common host.
