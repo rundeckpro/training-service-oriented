@@ -28,15 +28,7 @@ for:
     - allow: read
   job:
     - match:
-        group: ''
-        name: '.*'
-      allow: [run,read]
-    - match:
-        group: ''
-        name: 'Promote'
-      allow: [read]
-    - match:
-        group: ''
+        group: '.*'
         name: '.*'
       allow: [run,read]
   node:
