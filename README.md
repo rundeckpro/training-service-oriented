@@ -100,6 +100,7 @@ Seven jobs are loaded into the "simple" project:
 * stop : stop the app 	
 
 Several jobs are organized into a "utils" group since they support the other jobs and aren't typically used directly.
+The jobs are defined in YAML format and loaded during setup. ([source](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/jobs.yaml))
 
 ### Nodes
 
@@ -124,6 +125,9 @@ The Rundeck instance is configured with several logins. Each is given different 
 * ops: Can run jobs but not modify them.
 * dev: Can only see and run the "status" job
 
+See the example ACL policy file:
+[simple.aclpolicy](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/simple.aclpolicy)
+
 ## Under the covers
 
 You might be interested in how this working example was constructed.
@@ -131,13 +135,14 @@ You might be interested in how this working example was constructed.
 Each of the VMs uses a set of provinsiong scripts.
 The first server, "b2d", uses three scripts:
 
-* install-jenkins.sh: Installs jenkins via yum and starts the service. 
-* install-rundeck.sh: Installs rundeck via yum and starts the service.
-* add-project.sh: Creates the working project called "simple" with a set of jobs and nodes.
+* install-jenkins.sh: Installs jenkins via yum and starts the service. ([source](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/install-jenkins.sh))
+* install-rundeck.sh: Installs rundeck via yum and starts the service. ([source](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/install-rundeck.sh))
+* install-httpd.sh: Installs httpd via yum and starts the service. ([source](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/install-httpd.sh))
+* add-project.sh: Creates the working project called "simple" with a set of jobs and nodes ([source](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/add-project.sh)).
 
 While on the app1 and app2 VMs, the following script is used:
 
-* install-tomcats.sh: Installs two tomcat instances on each host.
+* install-tomcats.sh: Installs two tomcat instances on each host. ([source](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/install-tomcats.sh))
 Uses the rundeck-admin module to create nodes for the resource model in the "simple" project.
 
 ## TODO
