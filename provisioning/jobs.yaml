@@ -67,18 +67,18 @@
     strategy: node-first
     commands:
     - jobref:
-        group: ''
+        group: 'utils'
         name: url_exists
         args: -url ${option.war_url}
     - jobref:
-        group: ''
+        group: 'utils'
         name: stage_webapp
         args: -war_url ${option.war_url} -build_number ${option.build_number}
     - jobref:
         group: ''
         name: stop
     - jobref:
-        group: ''
+        group: 'utils'
         name: activate_version
         args: -build_number ${option.build_number}
     - jobref:
