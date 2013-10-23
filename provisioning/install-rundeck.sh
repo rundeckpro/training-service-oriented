@@ -42,6 +42,16 @@ yum -y install rundeck
 # 2.0 uses newer jetty. This should eventually be fixed in the rpm.
 sed -i "s/org.mortbay/org.eclipse/g" /etc/rundeck/jaas-loginmodule.conf
 
+# Add ops and dev user logins
+
+cat >> /etc/rundeck/realm.properties <<EOF
+dev:dev,dev,user,simple
+ops:ops,ops,user,simple
+releng:releng,releng,user,simple
+EOF
+cp /vagrant/provisioning/simple.aclpolicy /etc/rundeck/simple.aclpolicy
+chown rundeck:rundeck /etc/rundeck/simple.aclpolicy
+
 # Add the HipChat plugin
 if [[ ! -f  /var/lib/rundeck/libext/rundeck-hipchat-plugin-1.0.0.jar ]]
 then
