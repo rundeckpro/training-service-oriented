@@ -106,7 +106,6 @@ The jobs are defined in YAML format and loaded during setup. ([source](https://g
 
 The project is configured with a set of nodes that represent the VMs managed by vagrant 
 but also nodes that represent each of the tomcat instances.
-
 This _service oriented_ resource model uses the Rundeck Node concept and extends it to represent a software deployment.
 
 Each tomcat instance is modeled as a Rundeck node. This
@@ -118,10 +117,14 @@ system login to use to execute the commands. This helps
 isolate each tomcat instance from each other
 since they are co-located on the same host.
 
-### Rundeck logins
-The Rundeck instance is configured with several logins. Each is given different levels of access via an ACL policy file.
+You can see the resource model as a text document by accessing it via the Rundeck Web API:
+http://192.168.50.4:4440/api/1/resources?project=simple&format=yaml
 
-* admin: The super user can do anyting.
+### Rundeck logins
+The Rundeck instance is configured with several logins. 
+Each is given different levels of access via an ACL policy file.
+
+* admin: The super user that can do anyting.
 * ops: Can run jobs but not modify them.
 * dev: Can only see and run the "status" job
 
