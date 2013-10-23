@@ -28,14 +28,6 @@ To run the examples ensure you have:
 * [Vagrant](http://vagrantup.com) installed to run the VMs
 * Internet access to download needed software (automated).
 
-## Boxes
-
-The vagrant config defines three VMs:
-
-* b2d: The "build to deployment" server running Rundeck, Jenkins and httpd.
-* app1: The first app server running tomcat intances 1 and 2
-* app2: The second app server running tomcat instances 1 and 2
-
 ## Bootstrap
 
 Check out the source files for these examples:
@@ -46,7 +38,16 @@ Then change the working directory:
 
     cd training-service-oriented
     
-## Startup
+## Boxes
+
+The vagrant config defines three VMs:
+
+* b2d: The "build to deployment" server running Rundeck, Jenkins and httpd.
+* app1: The first app server running tomcat intances 1 and 2
+* app2: The second app server running tomcat instances 1 and 2
+
+ 
+### Startup
 
 Bring up the 3 VMs:
 
@@ -64,6 +65,11 @@ You can also access the simple webapp on each tomcat instance:
 * app2-tomcat1: http://192.168.50.12:18080/simple/
 * app2-tomcat2: http://192.168.50.12:28080/simple/
 
+You can ssh to any of these boxes using `vagrant ssh {box}`. 
+For example, to login to b2d box, do:
+
+    vagrant ssh b2d
+   
 ## Running the example
 
 1. Login to Rundeck and run the "status" job
