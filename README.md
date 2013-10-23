@@ -1,10 +1,10 @@
 These examples support Rundeck basic training where you will learn
-how Rundeck integrates with other tools, uses Jobs to provide
+how Rundeck integrates with other tools, use Jobs to provide
 self serve automation, and how to automate the setup of Rundeck itself.
 
 The example shows Rundeck supporting a continuous delivery process
 for a webapp called "simple".
-A set of Rundeck jobs  manage the webapp deployed to
+Rundeck jobs  manage the webapp deployed to
 a set of tomcat instances in the "simple" app environment. The jobs
 handle utility tasks as well as deploy the webapp, 
 and manage the app startup and shutdown of the tomcat instances, too.
@@ -15,7 +15,7 @@ instances by treating each instance as if it were on its own node.
 This can be useful if in some environments tomcat instances share hosts
 to minimize foot print or be deployed to their own hosts for isolation or horizontal scaling.
 
-There are a number of interesting integration points between Rundeck and other tools.
+There are a number of interesting integration points between Rundeck and other tools in the example, too.
 The [Jenkins Rundeck plugin](https://wiki.jenkins-ci.org/display/JENKINS/RunDeck+Plugin)
 is used to trigger Rundeck job execution, as well as, provide
 lists of build artifacts to rundeck jobs.
@@ -73,8 +73,8 @@ You can also access the simple webapp on each tomcat instance:
 * app2-tomcat1: http://192.168.50.12:18080/simple/
 * app2-tomcat2: http://192.168.50.12:28080/simple/
 
-You can ssh to any of these boxes using `vagrant ssh {box}`. 
-For example, to login to b2d box, do:
+You can ssh to any of these boxes using "vagrant ssh _{box}_". 
+For example, to login to b2d box do:
 
     vagrant ssh b2d
    
@@ -142,8 +142,8 @@ Each of the VMs uses a set of provinsiong scripts.
 The first server, "b2d", uses three scripts:
 
 * install-jenkins.sh: Installs jenkins via yum and starts the service. ([source](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/install-jenkins.sh))
-* install-rundeck.sh: Installs rundeck via yum and starts the service. ([source](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/install-rundeck.sh))
 * install-httpd.sh: Installs httpd via yum and starts the service. ([source](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/install-httpd.sh))
+* install-rundeck.sh: Installs rundeck via yum and starts the service. ([source](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/install-rundeck.sh))
 * add-project.sh: Creates the working project called "simple" with a set of jobs and nodes ([source](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/add-project.sh)).
 
 While on the app1 and app2 VMs, the following script is used:
