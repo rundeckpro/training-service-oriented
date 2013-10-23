@@ -1,15 +1,15 @@
 This example shows Rundeck supporting a continuous delivery process
 for a webapp called "simple".
-A set of Rundeck jobs  manage a webapp spread across
-a set of nodes in the "simple" app environment. The jobs
+A set of Rundeck jobs  manage the webapp deployed to
+a set of tomcat instances in the "simple" app environment. The jobs
 handle utility tasks as well as deploy the webapp, 
-and manage the app startup and shutdown, too.
-The deployment can be triggered by a Jenkins build or directly by a user.
+and manage the app startup and shutdown of the tomcat instances, too.
+The webapp deployment can be triggered by a Jenkins build or directly by a user.
 
 The example also shows a flexible way Rundeck can manage tomcat
-instances by treating them as if they were their own node.
+instances by treating each instance as if it were on its own node.
 This can be useful if in some environments tomcat instances share hosts
-to minimize foot print or be deployed to their own hosts for wide scale.
+to minimize foot print or be deployed to their own hosts for isolation or horizontal scaling.
 
 ## Requirements
 To run the examples ensure you have:
