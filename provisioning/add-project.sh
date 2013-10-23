@@ -16,6 +16,9 @@ su - rundeck -c "dispatch -p $PROJECT" > /dev/null
 # Fire off a command.
 su - rundeck -c "dispatch -p $PROJECT -f -- whoami"
 
+cp /vagrant/provisioning/readme.md.template /var/rundeck/projects/$PROJECT/readme.md
+chown rundeck:rundeck /var/rundeck/projects/$PROJECT/readme.md
+
 cp /vagrant/provisioning/jobs.yaml /tmp
 chown rundeck:rundeck /tmp/jobs.yaml
 

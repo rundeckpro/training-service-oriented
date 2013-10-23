@@ -27,15 +27,13 @@ then
 fi
 yum -y install xmlstarlet coreutils unzip nc
 
-
-
 #
 # JRE
 #
 yum -y install java-1.6.0
 
 #
-# Rerun 
+# rundeck-admin module 
 #
 RERUN_REPO_URL="https://bintray.com/ahonor/rerun-rpm/rpm"
 
@@ -48,57 +46,48 @@ yum -y install rerun rerun-rundeck-admin
 # 
 # Tomcat
 #
-
 TOMCAT_BASENAME="apache-tomcat-7.0.42"
 TOMCAT_ZIP_URL="http://jcenter.bintray.com/org/apache/tomcat/tomcat/7.0.42/tomcat-7.0.42.zip"
 curl -s --fail -L -z $TOMCAT_BASENAME.zip -o $TOMCAT_BASENAME.zip "$TOMCAT_ZIP_URL" || {
     echo >&2 "failed downloading tomcat binary."
     exit 3
 }
-
-
 unzip -o $TOMCAT_BASENAME.zip
-
 [[ -d $TOMCAT_BASENAME ]] || {
 	echo >&2 "$TOMCAT_BASENAME directory not found."
 	exit 3
 }
-
 mkdir -p /usr/local
-
+# Create a user group for tomcat logins
 if ! grep -q tomcat /etc/group
 then	
 	groupadd tomcat
 fi
-
 mv $TOMCAT_BASENAME /usr/local/$TOMCAT_BASENAME
 chmod 755 /usr/local/$TOMCAT_BASENAME/bin/*.sh
 chgrp -R tomcat /usr/local/$TOMCAT_BASENAME
 
 export CATALINA_HOME=/usr/local/$TOMCAT_BASENAME
-
 echo "CATALINA_HOME=$CATALINA_HOME"
-
 # 
-#
+# software installs complete.
 #
 
-# Register this host
+# Register this host to the project's resource model.
 os_info=(-osName "$(uname -s)" -osFamily unix -osArch "$(uname -p)" -osVersion "$(uname -r)")
-
 rerun rundeck-admin:resource-add --user admin --password admin --url $RUNDECK_URL \
 	--project $PROJECT \
     --model "-name $(hostname) -description 'tomcat server' -hostname $IP  -username rundeck ${os_info[*]}"
 
-
-# Create the tomcat instances
-for instance in 1 2 
+#
+# Create the tomcat instances and register them as their own nodes.
+#
+for instance in $(seq 1 2)
 do
 	CATALINA_BASE=/home/tomcat${instance}
 	echo "CATALINA_BASE=$CATALINA_BASE"
 
-
-	# Add the login account.
+	# Add the login account for this instance.
 	if ! id tomcat${instance} >/dev/null 2>/dev/null
 	then
 		useradd -m tomcat${instance} -d /home/tomcat${instance} -g tomcat \
@@ -110,11 +99,6 @@ do
 	cp /vagrant/provisioning/id_rsa.pub $CATALINA_BASE/.ssh/authorized_keys2
 	chmod 600 $CATALINA_BASE/.ssh/authorized_keys2
 	chown -R tomcat${instance} $CATALINA_BASE/.ssh
-
-	# Start defining the model for this node.
-	model=(${os_info[*]} -hostname $IP -username tomcat${instance} -tags tomcat,tomcat${instance},$(hostname))
-	model=(${model[*]} -catalina_base $CATALINA_BASE -catalina_home $CATALINA_HOME)
-	model=(${model[*]} -rank ${instance} -simple_url http://$IP:${instance}8080/simple)
 
 	mkdir -p $CATALINA_BASE/{logs,temp,work,bin}
 
@@ -161,8 +145,10 @@ do
 	(cd $CATALINA_BASE; ln -s webapps-1.0.0 webapps)
 	chown -R tomcat${instance}:tomcat $CATALINA_BASE
 
-
 	# Register this tomcat instance as a node
+	model=(${os_info[*]} -hostname $IP -username tomcat${instance} -tags tomcat,tomcat${instance},$(hostname))
+	model=(${model[*]} -catalina_base $CATALINA_BASE -catalina_home $CATALINA_HOME)
+	model=(${model[*]} -rank ${instance} -simple_url http://$IP:${instance}8080/simple)
 	#echo "model: ${model[*]}"
 	rerun rundeck-admin:resource-add --user admin --password admin --url $RUNDECK_URL \
 		--project $PROJECT \
