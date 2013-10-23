@@ -1,18 +1,15 @@
 This example shows Rundeck supporting a continuous delivery process
 for a webapp called "simple".
-Rundeck is shown with a set of jobs that deploy a webapp to a
-nodes in the "simple" app environment. Deployment can be triggered by
-a Jenkins build or directly by a user.
+A set of Rundeck jobs  manage a webapp spread across
+a set of nodes in the "simple" app environment. The jobs
+handle utility tasks as well as deploy the webapp, 
+and manage the app startup and shutdown, too.
+The deployment can be triggered by a Jenkins build or directly by a user.
 
-The example also shows how Rundeck can manage nodes multiple
-with multiple tomcat instances on each. This can be useful
-if one prefers to manage services as if they were
-deployed to their own nodes, though physically they
-share a common host.
-
-Also in the example, is a 
-"Remote Script Node Step" plugin. This plugin executes
-user supplied python script on remote nodes.
+The example also shows a flexible way Rundeck can manage tomcat
+instances by treating them as if they were their own node.
+This can be useful if in some environments tomcat instances share hosts
+to minimize foot print or be deployed to their own hosts for wide scale.
 
 ## Requirements
 To run the examples ensure you have:
