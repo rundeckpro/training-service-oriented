@@ -45,6 +45,7 @@
       args: ${option.build_number} ${node.catalina_base}
   description: activate the app version
   name: activate_version
+  group: utils
   uuid: b5d8bd40-7da6-4358-acda-9deee5d32b9d
   nodefilters:
     dispatch:
@@ -89,19 +90,6 @@
         name: status
   description: deploy the app
   name: deploy
-  notification:
-    onsuccess:
-      plugin:
-        type: HipChatNotification
-        configuration:
-          room: rundeck
-          apiAuthToken: deecdd90b9f67cfea29588e09e0960
-    onfailure:
-      plugin:
-        type: HipChatNotification
-        configuration:
-          apiAuthToken: deecdd90b9f67cfea29588e09e0960
-          room: rundeck
   uuid: c1fdd8ce-b39e-4e6a-9d36-4c7dd68ad6e2
   options:
     build_number:
@@ -142,6 +130,7 @@
       args: ${option.war_url} ${option.build_number} ${node.catalina_base}
   description: stage the app
   name: stage_webapp
+  group: utils  
   uuid: 1e3eb770-b272-4055-94ea-11ad2f935846
   nodefilters:
     dispatch:
@@ -265,6 +254,7 @@
         ; exit 1 ; }'
   description: check if the url exists
   name: url_exists
+  group: utils  
   uuid: 2c585c24-3e0f-48d7-9f3d-f1f1b7e11a81
   options:
     url:
