@@ -117,6 +117,13 @@ system login to use to execute the commands. This helps
 isolate each tomcat instance from each other
 since they are co-located on the same host.
 
+### Rundeck logins
+The Rundeck instance is configured with several logins. Each is given different levels of access via an ACL policy file.
+
+* admin: The super user can do anyting.
+* ops: Can run jobs but not modify them.
+* dev: Can only see and run the "status" job
+
 ## Under the covers
 
 You might be interested in how this working example was constructed.
