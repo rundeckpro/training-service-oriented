@@ -125,6 +125,9 @@ The Rundeck instance is configured with several logins. Each is given different 
 * ops: Can run jobs but not modify them.
 * dev: Can only see and run the "status" job
 
+Try logging in as each of the users and notice which jobs you are able to see in the Jobs page. 
+Also notice, that only the admin user can edit jobs.
+
 See the example ACL policy file:
 [simple.aclpolicy](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/simple.aclpolicy)
 
