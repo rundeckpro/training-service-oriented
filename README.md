@@ -1,4 +1,8 @@
-This example shows Rundeck supporting a continuous delivery process
+These examples support Rundeck basic training where you will learn
+how Rundeck integrates with other tools, uses Jobs to provide
+self serve automation, and how to automate the setup of Rundeck itself.
+
+The example shows Rundeck supporting a continuous delivery process
 for a webapp called "simple".
 A set of Rundeck jobs  manage the webapp deployed to
 a set of tomcat instances in the "simple" app environment. The jobs
@@ -10,6 +14,13 @@ The example also shows a flexible way Rundeck can manage tomcat
 instances by treating each instance as if it were on its own node.
 This can be useful if in some environments tomcat instances share hosts
 to minimize foot print or be deployed to their own hosts for isolation or horizontal scaling.
+
+There are a number of interesting integration points between Rundeck and other tools.
+The [Jenkins Rundeck plugin](https://wiki.jenkins-ci.org/display/JENKINS/RunDeck+Plugin)
+is used to trigger Rundeck job execution, as well as, provide
+lists of build artifacts to rundeck jobs.
+An Apache httpd instance is used to play the role of a cheap and simple WebDAV repository 
+to store scripts and other files shared with Rundeck.
 
 ## Requirements
 To run the examples ensure you have:
@@ -46,7 +57,7 @@ After the b2d VM is running, you can login to Jenkins and Rundeck:
 * [jenkins](http://192.168.50.4:8080) (login: anonymous)
 * [rundeck](http://192.168.50.4:4440) (login: admin/admin)
 
-You can also access the simple pages:
+You can also access the simple webapp on each tomcat instance:
 
 * app1-tomcat1: http://192.168.50.11:18080/simple/
 * app1-tomcat2: http://192.168.50.11:28080/simple/
