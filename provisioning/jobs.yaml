@@ -93,10 +93,12 @@
   uuid: c1fdd8ce-b39e-4e6a-9d36-4c7dd68ad6e2
   options:
     build_number:
+      enforced: true
       required: true
       description: the build number
       valuesUrl: http://192.168.50.4/cgi-bin/jenkins-builds.cgi?appname=simple
     war_url:
+      enforced: true
       required: true
       description: url to the war
       valuesUrl: http://192.168.50.4/cgi-bin/jenkins-artifacts.cgi?appname=simple&build=${option.build_number.value}
