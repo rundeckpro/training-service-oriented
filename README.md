@@ -25,16 +25,16 @@ to store scripts and other files shared with Rundeck.
 ## Requirements
 To run the examples ensure you have:
 
-* Vagrant installed to run the VMs
+* [Vagrant](http://vagrantup.com) installed to run the VMs
 * Internet access to download needed software (automated).
 
-## Configuration
+## Boxes
 
 The vagrant config defines three VMs:
 
-* b2d: The "build to deployment" server running Rundeck and Jenkins.
-* app1: The first app server running tomcats 1 and 2
-* app2: The second app server running tomcats 1 and 2
+* b2d: The "build to deployment" server running Rundeck, Jenkins and httpd.
+* app1: The first app server running tomcat intances 1 and 2
+* app2: The second app server running tomcat instances 1 and 2
 
 ## Bootstrap
 
@@ -77,14 +77,15 @@ A Rundeck project called "simple" contains the jobs and nodes to manage the deli
 ### Jobs
 Seven jobs are loaded into the "simple" project:
 
-* activate_version : activate the app version 	
+* utils/activate_version : activate the app version
+* utils/stage_webapp : stage the app 	
+* utils/url_exists : check if the url exists
 * deploy : deploy the app 	
-* stage_webapp : stage the app 	
 * start : start the app 	
 * status : get the app status 	
 * stop : stop the app 	
-* url_exists : check if the url exists
 
+Several jobs are organized into a "utils" group since they support the other jobs and aren't typically used directly.
 
 ### Nodes
 
