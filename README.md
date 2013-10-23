@@ -63,8 +63,8 @@ Bringing machine 'app2' up with 'virtualbox' provider...
 
 After the b2d VM is running, you can login to Jenkins and Rundeck:
 
-* [jenkins](http://192.168.50.4:8080) (login: anonymous)
-* [rundeck](http://192.168.50.4:4440) (login: admin/admin)
+* jenkins: http://192.168.50.4:8080/ (login: anonymous)
+* rundeck: http://192.168.50.4:4440/ (login: admin/admin)
 
 You can also access the simple webapp on each tomcat instance:
 
