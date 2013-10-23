@@ -53,6 +53,14 @@ Bring up the 3 VMs:
 
     vagrant up 
 
+You should see output similar to:
+
+```
+Bringing machine 'b2d' up with 'virtualbox' provider...
+Bringing machine 'app1' up with 'virtualbox' provider...
+Bringing machine 'app2' up with 'virtualbox' provider...
+```
+
 After the b2d VM is running, you can login to Jenkins and Rundeck:
 
 * [jenkins](http://192.168.50.4:8080) (login: anonymous)
