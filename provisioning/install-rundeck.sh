@@ -21,7 +21,8 @@ RUNDECK_REPO_URL=$3
 #
 # JRE
 #
-yum -y install java7
+#yum -y install java7
+yum -y install java-1.7.0-openjdk
 
 # Rundeck 
 #
@@ -37,7 +38,7 @@ else
         rpm -Uvh http://repo.rundeck.org/latest.rpm 
     fi
 fi
-yum -y install rundeck
+yum -y --skip-broken install rundeck
 
 # 2.0 uses newer jetty. This should eventually be fixed in the rpm.
 sed -i "s/org.mortbay/org.eclipse/g" /etc/rundeck/jaas-loginmodule.conf

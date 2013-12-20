@@ -152,7 +152,7 @@ do
 	#echo "model: ${model[*]}"
 	rerun rundeck-admin:resource-add --user admin --password admin --url $RUNDECK_URL \
 		--project $PROJECT \
-		--model "-name $(hostname)-tomcat${instance} -description 'tomcat app instance $instance on $(hostname)' ${model[*]}"
+		--model "-name $(hostname)-tomcat${instance} -description 'tomcat instance#$instance on $(hostname)' ${model[*]}"
 
 	# Startup the new instance.
 	echo "Starting the instance..."

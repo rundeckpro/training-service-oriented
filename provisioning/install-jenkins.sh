@@ -15,7 +15,8 @@ RUNDECK_IP=$1
 #
 # JRE
 #
-yum -y install java7
+#yum -y install java7
+yum -y install java-1.7.0-openjdk
 #
 # Jenkins
 #
