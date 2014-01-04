@@ -10,7 +10,7 @@ RUNDECK_URL=$2
 PROJECT=$3
 
 # Exit immediately on error or undefined variable.
-#set -e 
+set -e 
 set -u
 
 # Process command line arguments.
@@ -63,7 +63,9 @@ if ! grep -q tomcat /etc/group
 then	
 	groupadd tomcat
 fi
-mv $TOMCAT_BASENAME /usr/local/$TOMCAT_BASENAME
+
+[[ ! -d /usr/local/$TOMCAT_BASENAME ]] && mv $TOMCAT_BASENAME /usr/local/$TOMCAT_BASENAME
+
 chmod 755 /usr/local/$TOMCAT_BASENAME/bin/*.sh
 chgrp -R tomcat /usr/local/$TOMCAT_BASENAME
 
@@ -140,7 +142,7 @@ do
 
 	# Deploy the simple war file to the webapps directory.
 	[[ ! -d $CATALINA_BASE/webapps ]] || rm -r $CATALINA_BASE/webapps
-	mkdir $CATALINA_BASE/webapps-1.0.0
+	mkdir -p $CATALINA_BASE/webapps-1.0.0
 	cp /vagrant/provisioning/simple-1.0.0.war $CATALINA_BASE/webapps-1.0.0/simple.war
 	(cd $CATALINA_BASE; ln -s webapps-1.0.0 webapps)
 	chown -R tomcat${instance}:tomcat $CATALINA_BASE
