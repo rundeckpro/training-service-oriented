@@ -35,7 +35,7 @@ yum -y install java-1.6.0
 #
 # rundeck-admin module 
 #
-RERUN_REPO_URL="https://bintray.com/ahonor/rerun-rpm/rpm"
+RERUN_REPO_URL="https://bintray.com/rerun/rerun-rpm/rpm"
 
 curl -# --fail -L -o /etc/yum.repos.d/rerun.repo "$RERUN_REPO_URL" || {
     echo "failed downloading rerun.repo config"
