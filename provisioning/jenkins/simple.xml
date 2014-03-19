@@ -22,7 +22,7 @@
       <latestOnly>false</latestOnly>
       <allowEmptyArchive>false</allowEmptyArchive>
     </hudson.tasks.ArtifactArchiver>
-    <org.jenkinsci.plugins.rundeck.RundeckNotifier plugin="rundeck@2.11">
+    <org.jenkinsci.plugins.rundeck.RundeckNotifier plugin="rundeck@3.0">
       <jobId>simple:deploy</jobId>
       <options>build_number=$BUILD_NUMBER
 war_url=$BUILD_URL/artifact/simple-1.0.$BUILD_NUMBER.war</options>
