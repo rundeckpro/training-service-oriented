@@ -36,7 +36,17 @@ echo "Sample war file: $(ls /var/lib/jenkins/examples)"
 
 # Configure jenkins.
 # -----------------
-
+if [ ! -f /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml ]
+then
+cat >/var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml <<EOF
+<?xml version='1.0' encoding='UTF-8'?>
+<jenkins.model.JenkinsLocationConfiguration>
+  <adminAddress>address not configured yet &lt;nobody@nowhere&gt;</adminAddress>
+  <jenkinsUrl>http://$RUNDECK_IP:8080/</jenkinsUrl>
+</jenkins.model.JenkinsLocationConfiguration>
+EOF
+chown jenkins:jenkins /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
+fi
 
 # Start up jenkins
 # ----------------
