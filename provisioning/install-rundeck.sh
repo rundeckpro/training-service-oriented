@@ -53,23 +53,6 @@ EOF
 cp /vagrant/provisioning/simple.aclpolicy /etc/rundeck/simple.aclpolicy
 chown rundeck:rundeck /etc/rundeck/simple.aclpolicy
 
-# Add the HipChat plugin
-if [[ ! -f  /var/lib/rundeck/libext/rundeck-hipchat-plugin-1.0.0.jar ]]
-then
-cp /vagrant/rundeck-hipchat-plugin-1.0.0.jar /var/lib/rundeck/libext/
-chown rundeck:rundeck /var/lib/rundeck/libext/rundeck-hipchat-plugin-1.0.0.jar
-echo "HipChat plugin installed."
-fi
-
-if [[ ! -f  /var/lib/rundeck/libext/PagerDutyNotification.groovy ]]
-then
-curl -s --fail -L https://raw.github.com/rundeck-plugins/pagerduty-notification/master/src/PagerDutyNotification.groovy -o /var/lib/rundeck/libext/PagerDutyNotification.groovy
-cat >>/etc/rundeck/framework.properties <<EOF
-framework.plugin.Notification.PagerDutyNotification.service_key=value
-EOF
-echo "PagerDuty plugin installed."
-fi
-chown -R rundeck:rundeck /var/lib/rundeck/libext
 
 #
 # Disable the firewall so we can easily access it from any host.
