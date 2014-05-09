@@ -91,13 +91,13 @@ A Rundeck project called "simple" contains the jobs and nodes to manage the deli
 ### Jobs
 Seven jobs are loaded into the "simple" project:
 
+* app/deploy : deploy the app 	
+* app/start : start the app 	
+* app/status : get the app status 	
+* app/stop : stop the app 	
 * utils/activate_version : activate the app version
 * utils/stage_webapp : stage the app 	
 * utils/url_exists : check if the url exists
-* deploy : deploy the app 	
-* start : start the app 	
-* status : get the app status 	
-* stop : stop the app 	
 
 Several jobs are organized into a "utils" group since they support the other jobs and aren't typically used directly.
 The jobs are defined in YAML format and loaded during setup. ([source](https://github.com/simplifyops/training-service-oriented/blob/master/provisioning/jobs.yaml))
@@ -153,7 +153,4 @@ Uses the rundeck-admin module to create nodes for the resource model in the "sim
 
 ## TODO
 
-Use Jenkins plugin for artifact URL. eg
-
-* http://192.168.50.4:8080/plugin/rundeck/options/artifact?project=simple
 
