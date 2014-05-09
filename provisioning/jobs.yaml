@@ -53,8 +53,7 @@
       excludePrecedence: true
       rankAttribute: rank
       rankOrder: ascending
-    include:
-      tags: tomcat
+    filter: 'tags: tomcat'
   group: utils
   options:
     build_number:
@@ -78,7 +77,7 @@
         args: -war_url ${option.war_url} -build_number ${option.build_number}
       description: Install WAR to version directory
     - jobref:
-        group: ''
+        group: app
         name: stop
       description: Shutdown tomcat
     - jobref:
@@ -87,16 +86,17 @@
         args: -build_number ${option.build_number}
       description: Change to link to version
     - jobref:
-        group: ''
+        group: app
         name: start
       description: Startup tomcat
     - jobref:
-        group: ''
+        group: app
         name: status
       description: Check tomcat app
   description: deploy the app
   name: deploy
   uuid: c1fdd8ce-b39e-4e6a-9d36-4c7dd68ad6e2
+  group: app
   options:
     build_number:
       enforced: true
@@ -146,8 +146,7 @@
       excludePrecedence: true
       rankAttribute: rank
       rankOrder: ascending
-    include:
-      tags: tomcat
+    filter: 'tags: tomcat'
   group: utils
   options:
     build_number:
@@ -193,8 +192,8 @@
       keepgoing: false
       excludePrecedence: true
       rankOrder: ascending
-    include:
-      tags: tomcat
+    filter: 'tags: tomcat'
+  group: app
 - id: 71fb2cd4-2935-4f4a-9650-ec6b06e380cb
   project: simple
   loglevel: INFO
@@ -213,8 +212,8 @@
       keepgoing: true
       excludePrecedence: true
       rankOrder: ascending
-    include:
-      tags: tomcat
+    filter: 'tags: tomcat'
+  group: app
 - id: fb53355f-fd93-4def-8ea1-e172414d5010
   project: simple
   loglevel: INFO
@@ -240,6 +239,36 @@
         fi
         echo "Stopped (was $status)"
       args: ${node.catalina_base}
+      errorhandler:
+        script: |+
+          #!/usr/bin/env bash
+
+          set -eu
+          [[ $# = 1 ]] || {
+              echo >&2 'usage: catalina_base'
+              exit 2
+          }
+          CATALINA_BASE=$1
+          CATALINA_PID=$(ps auxww|grep java|grep catalina.base=${CATALINA_BASE}|grep -v grep|awk '{print $2}')
+
+          if [[ -z "${CATALINA_PID:-}" ]]
+          then
+             echo >&2 "tomcat PID could not be found. already dead."
+          else
+
+             if ! kill -9 "$CATALINA_PID"
+             then
+                echo >&2 "Failed killing tomcat process: $CATALINA_PID"
+                exit 1
+             else
+                echo "Killed tomcat pid $CATALINA_PID"
+             fi   
+          fi
+
+          exit 0
+
+        args: ${node.catalina_base}
+        keepgoingOnSuccess: true
       description: Shutdown  tomcat
   description: stop the app
   name: stop
@@ -251,8 +280,8 @@
       excludePrecedence: true
       rankAttribute: rank
       rankOrder: ascending
-    include:
-      tags: tomcat
+    filter: 'tags: tomcat'
+  group: app
 - id: 2c585c24-3e0f-48d7-9f3d-f1f1b7e11a81
   project: simple
   loglevel: INFO
