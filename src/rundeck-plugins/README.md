@@ -1,4 +1,4 @@
-example-script-remote-node-step-plugin
+python-command-step-plugin
 ------
 
 This directory contains an example script-based Remote Script Node Step Plugin.
@@ -10,20 +10,20 @@ Build
 
 produces:
 
-    example-script-remote-node-step-plugin.zip
+    python-command-step-plugin.zip
 
 Files
 =====
 
-`example-script-remote-node-step-plugin/plugin.yaml`
+`python-command-step-plugin/plugin.yaml`
 
 :   Defines the metadata for the plugin
 
-`example-script-remote-node-step-plugin/contents/`
+`python-command-step-plugin/contents/`
 
 :   directory containing necessary scripts or assets
 
-`example-script-remote-node-step-plugin/contents/nodestep.sh`
+`python-command-step-plugin/contents/nodestep.sh`
 
 :   the script defined in plugin.yaml to be executed for the plugin
 
@@ -38,4 +38,4 @@ Usage
 
 Install the plugin in your `$RDECK_BASE/libext` directory:
 
-    mv example-script-remote-node-step-plugin.zip $RDECK_BASE/libext
+    mv python-command-step-plugin.zip $RDECK_BASE/libext
