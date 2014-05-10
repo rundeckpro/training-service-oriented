@@ -7,7 +7,7 @@ providers:
   - name: python-node-step
     service: RemoteScriptNodeStep
     title: Python node step
-    description: Execute the python statements on the remote node.
+    description: Execute the python statement on the remote node.
     plugin-type: script
     script-interpreter: /bin/bash
     script-file: nodestep.sh
@@ -16,4 +16,4 @@ providers:
       - type: String
         name: script
         title: Script
-        description: python statements to execute.
+        description: python statement
