@@ -4,8 +4,8 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "https://dl.dropbox.com/u/7225008/Vagrant/CentOS-6.3-x86_64-minimal.box"
 
   PROJECT="simple"
-  #RUNDECK_YUM_REPO="https://bintray.com/rundeck/candidate-rpm/rpm"
-  RUNDECK_YUM_REPO="https://bintray.com/gschueler/ci-rundeck2-rpm/rpm"
+  RUNDECK_YUM_REPO="https://bintray.com/rundeck/rundeck-rpm/rpm"
+  RERUN_YUM_REPO="https://bintray.com/rerun/rerun-rpm/rpm"
 
 
   RUNDECK_IP="192.168.50.4"
@@ -17,6 +17,8 @@ Vagrant.configure("2") do |config|
     b2d.vm.provision :shell, :path => "provisioning/install-rundeck.sh", :args => "b2d #{RUNDECK_IP} #{RUNDECK_YUM_REPO}"
     b2d.vm.provision :shell, :path => "provisioning/add-project.sh", :args => "#{PROJECT}"
     b2d.vm.provision :shell, :path => "provisioning/install-httpd.sh"
+    b2d.vm.provision :shell, :path => "provisioning/install-git.sh"
+    b2d.vm.provision :shell, :path => "provisioning/install-rundeck-admin.sh", :args => "#{RERUN_YUM_REPO} http://#{RUNDECK_IP}:4440"
   end
 
   config.vm.define :app1 do |app1|
